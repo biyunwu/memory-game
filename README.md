@@ -3,18 +3,22 @@
 ## Table of Contents
 
 * [Instructions](#instructions)
+* [Functionality](#functionality)
 * [Contributing](#contributing)
 
 ## Instructions
 
-The starter project has some HTML and CSS styling to display a static version of the Memory Game project. You'll need to convert this project from a static project to an interactive one. This will require modifying the HTML and CSS files, but primarily the JavaScript file.
+This is a memory game project which is implemented by native JavsScript, css animation and Font Awsome icons.
 
-To get started, open `js/app.js` and start building out the app's functionality
+## Functionality
 
-For specific, detailed instructions, look at the project instructions in the [Udacity Classroom](https://classroom.udacity.com/me).
+* Once the page is opened or refreshed, 8 pairs of idetical cards positioned randomly in the 16 blocks.
+* Click one card to show its icon, then click another to compare them. If the cards are idetical, they keep showing until the game to be finished. Otherwise, the unmatched cards display for 1 second with red background and shaking animation to reminder the wrong guess, then turn to be hidden.
+
+    [Video](failure.mov)
+
+* After the game finished, the success info page shows the grade which is according to the failure times.
 
 ## Contributing
 
-This repository is the starter code for _all_ Udacity students. Therefore, we most likely will not accept pull requests.
-
-For details, check out [CONTRIBUTING.md](CONTRIBUTING.md).
+Feel free to pull your request.
