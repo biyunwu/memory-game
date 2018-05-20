@@ -3,6 +3,7 @@
  */
 const cards = ["fa-diamond", "fa-paper-plane-o", "fa-anchor", "fa-bolt", "fa-cube", "fa-bomb", "fa-leaf", "fa-bicycle"];
 let openCards = [];
+let moveCounter = 0;
 
 /*
  * Display the cards on the page
@@ -74,6 +75,7 @@ function checkCard(node){
                 // Leave 1 second to show the second card, then hide the ummatched cards.
                 setTimeout(hideCards, 1000);
             }
+            incrementMoveCounter();
         }
     }
 }
@@ -94,4 +96,19 @@ function addWrongAnimation(){
 function hideCards(){
     openCards.forEach((card) => {card.className = "card"});
     openCards = [];
+}
+
+// Update move counter.
+const moves = document.querySelector(".moves");
+const stars = document.querySelectorAll(".fa.fa-star");
+function incrementMoveCounter(){
+    const num = Number(moves.textContent) + 1;
+    moves.textContent = num;
+    if(12 < num && num <= 16){
+        stars[stars.length - 1].className = "fa fa-star-o";
+    } else if (16 < num && num <= 20){
+        stars[stars.length - 2].className = "fa fa-star-o";
+    } else if (num > 20){
+        stars[stars.length - 3].className = "fa fa-star-o";
+    }
 }
