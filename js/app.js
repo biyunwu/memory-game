@@ -4,6 +4,7 @@
 const cards = ["fa-diamond", "fa-paper-plane-o", "fa-anchor", "fa-bolt", "fa-cube", "fa-bomb", "fa-leaf", "fa-bicycle"];
 let openCards = [];
 let moveCounter = 0;
+let matchedIcons = 0;
 
 /*
  * Display the cards on the page
@@ -76,17 +77,27 @@ function checkCard(node){
                 setTimeout(hideCards, 1000);
             }
             incrementMoveCounter();
+            if(matchedIcons === cards.length){success();}
         }
     }
 }
 
 function matchCards(){
-    openCards.forEach((card) => {
-        // Dispaly the matched cards by adding classes.
-        card.className = "card match"
-        // card.removeEventListener("click", displayCard)
-    });
+    openCards.forEach((card) => {card.className = "card match"});
     openCards = [];
+    matchedIcons += 1;
+}
+
+function success(){
+    document.body.style.background = "white";
+    document.body.innerHTML = `
+    <div class="container center">
+        ${successAnimation}
+        <h1>Congratulations! You Won!</h1> 
+        <p>With ${moveCounter} Moves and ${document.querySelectorAll(".fa.fa-star").length} stars.</p>
+        <p>Wooooooooo!</p>
+        <button class="btn" type="submit"  onClick="window.location.reload();">Play again</button>
+    </div>`;
 }
 
 function addWrongAnimation(){
@@ -102,13 +113,25 @@ function hideCards(){
 const moves = document.querySelector(".moves");
 const stars = document.querySelectorAll(".fa.fa-star");
 function incrementMoveCounter(){
-    const num = Number(moves.textContent) + 1;
-    moves.textContent = num;
-    if(12 < num && num <= 16){
+    moveCounter += 1;
+    // const num = Number(moves.textContent) + 1;
+    moves.textContent = moveCounter;
+    if(12 < moveCounter && moveCounter <= 16){
         stars[stars.length - 1].className = "fa fa-star-o";
-    } else if (16 < num && num <= 20){
+    } else if (16 < moveCounter && moveCounter <= 20){
         stars[stars.length - 2].className = "fa fa-star-o";
-    } else if (num > 20){
+    } else if (moveCounter > 20){
         stars[stars.length - 3].className = "fa fa-star-o";
     }
 }
+
+const successAnimation = `
+<div class="check_mark">
+    <div class="sa-icon sa-success animate">
+        <span class="sa-line sa-tip animateSuccessTip"></span>
+        <span class="sa-line sa-long animateSuccessLong"></span>
+        <div class="sa-placeholder"></div>
+        <div class="sa-fix"></div>
+    </div>
+</div>
+`;
