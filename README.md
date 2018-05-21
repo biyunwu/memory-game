@@ -12,16 +12,16 @@ This is a memory game project which is implemented by native JavsScript, css ani
 
 ## Functionality
 
-1. Once the page is opened or refreshed, 8 pairs of idetical cards positioned randomly in the 16 blocks.
-2. Click one card to show its icon, then click another to compare them. If the cards are idetical, they keep showing until the game to be finished.
+1. Once the page is opened or refreshed, 8 pairs of identical cards positioned randomly in the 16 blocks.
+2. Click one card to show its icon, then click another to compare them. If the cards are identical, they keep showing until the game to be finished.
 
     ![matched](img/matched.gif)
 
-3. Otherwise, the unmatched cards display for 1 second with red background and shaking animation to reminder the wrong guess, then turn to be hidden.
+1. Otherwise, the unmatched cards display for 1 second with red background and shaking animation to indicate the wrong guess, then disappear.
 
     ![unmatched](img/unmatched.gif)
 
-4. After the game finished, the success info page shows the grade which is according to the failure times.
+1. After the game is finished, the final tally page shows the statistics of your performance.
 
     ![success](img/success.gif)
 
