@@ -12,12 +12,24 @@ This is a memory game project which is implemented by native JavsScript, css ani
 
 ## Functionality
 
-* Once the page is opened or refreshed, 8 pairs of idetical cards positioned randomly in the 16 blocks.
-* Click one card to show its icon, then click another to compare them. If the cards are idetical, they keep showing until the game to be finished. Otherwise, the unmatched cards display for 1 second with red background and shaking animation to reminder the wrong guess, then turn to be hidden.
+1. Once the page is opened or refreshed, 8 pairs of idetical cards positioned randomly in the 16 blocks.
+2. Click one card to show its icon, then click another to compare them. If the cards are idetical, they keep showing until the game to be finished.
 
-    [Video](failure.mov)
+    ![matched](img/matched.gif)
 
-* After the game finished, the success info page shows the grade which is according to the failure times.
+3. Otherwise, the unmatched cards display for 1 second with red background and shaking animation to reminder the wrong guess, then turn to be hidden.
+
+    ![unmatched](img/unmatched.gif)
+
+4. After the game finished, the success info page shows the grade which is according to the failure times.
+
+    ![success](img/success.gif)
+
+## Attribution
+
+* Shuffle array function: [Stack Overflow](http://stackoverflow.com/a/2450976)
+* Shaking animation: [css-tricks.com](https://css-tricks.com/snippets/css/shake-css-keyframe-animation/)
+* Success animation: [Istiak Tridip](https://codepen.io/istiaktridip/pen/BZqaOd)
 
 ## Contributing
 
