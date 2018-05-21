@@ -261,9 +261,11 @@ h1 {
     border-color: transparent\9;
 }
 .sa-icon.sa-success .sa-line.sa-tip {
+    transform: rotate(45deg) \9;
     -ms-transform: rotate(45deg) \9;
 }
 .sa-icon.sa-success .sa-line.sa-long {
+    transform: rotate(45deg) \9;
     -ms-transform: rotate(-45deg) \9;
 }
 
