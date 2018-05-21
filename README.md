@@ -17,18 +17,18 @@ This is a memory game project which is implemented by native JavsScript, css ani
 
     ![matched](img/matched.gif)
 
-1. Otherwise, the unmatched cards display for 1 second with red background and shaking animation to indicate the wrong guess, then disappear.
+3. Otherwise, the unmatched cards display for 1 second with red background and shaking animation to indicate the wrong guess, then disappear.
 
     ![unmatched](img/unmatched.gif)
 
-1. After the game is finished, the final tally page shows the statistics of your performance.
+4. After the game is finished, the final tally page shows the statistics of your performance.
 
     ![success](img/success.gif)
 
 ## Attribution
 
 * Shuffle array function: [Stack Overflow](http://stackoverflow.com/a/2450976)
-* Shaking animation: [css-tricks.com](https://css-tricks.com/snippets/css/shake-css-keyframe-animation/)
+* Shaking animation: [CSS-Tricks](https://css-tricks.com/snippets/css/shake-css-keyframe-animation/)
 * Success animation: [Istiak Tridip](https://codepen.io/istiaktridip/pen/BZqaOd)
 
 ## Contributing
