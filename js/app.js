@@ -105,7 +105,7 @@ function addWrongAnimation(){
 }
 
 function hideCards(){
-    openCards.forEach((card) => {card.className = "card"});
+    openCards.forEach((card) => {card.className = "card";});
     openCards = [];
 }
 
