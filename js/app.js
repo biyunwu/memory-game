@@ -5,6 +5,8 @@ const cards = ["fa-diamond", "fa-paper-plane-o", "fa-anchor", "fa-bolt", "fa-cub
 let openCards = [];
 let moveCounter = 0;
 let matchedIcons = 0;
+let gameStart = false;
+let timer = null;
 
 /*
  * Display the cards on the page
@@ -59,6 +61,10 @@ function displayCard(event){
     const currNode = event.target;
     // Check clicked element
     if(currNode.nodeName === "LI"){
+        if(!gameStart){
+            gameStart = true;
+            timer = setInterval(setTime, 1000);
+        }
         if(!currNode.className.includes("match")){
             checkCard(currNode);
         }
@@ -96,19 +102,6 @@ function matchCards(){
     matchedIcons += 1;
 }
 
-function success(){
-    document.body.style.background = "white";
-    // Show statistics of the user's performance
-    document.body.innerHTML = `
-    <div class="container center">
-        ${successAnimation}
-        <h1>Congratulations! You Won!</h1> 
-        <p>With ${moveCounter} Moves and ${document.querySelectorAll(".fa.fa-star").length} stars.</p>
-        <p>Wooooooooo!</p>
-        <button class="btn" type="submit"  onClick="window.location.reload();">Play again</button>
-    </div>`;
-}
-
 function addWrongAnimation(){
     openCards.forEach((card) => {card.className += " wrong"});
 }
@@ -130,6 +123,41 @@ function incrementMoveCounter(){
     } else if (moveCounter > 16){
         stars[stars.length - 2].className = "fa fa-star-o";
     }
+}
+
+// Timer function modified based on https://stackoverflow.com/questions/5517597/plain-count-up-timer-in-javascript
+const minutesLabel = document.getElementById("minutes");
+const secondsLabel = document.getElementById("seconds");
+let totalSeconds = 0;
+
+function setTime() {
+    ++totalSeconds;
+    secondsLabel.innerHTML = pad(totalSeconds % 60);
+    minutesLabel.innerHTML = pad(parseInt(totalSeconds / 60));
+}
+function pad(val) {
+    const valString = val + "";
+    if (valString.length < 2) {
+        return "0" + valString;
+    } else {
+        return valString;
+    }
+}
+
+// Show statistics of the user's performance after the game is finished
+function success(){
+    // Stop timer
+    clearInterval(timer);
+    document.body.style.background = "white";
+    document.body.innerHTML = `
+    <div class="container center">
+        ${successAnimation}
+        <h1>Congratulations! You Won!</h1> 
+        <p>With ${moveCounter} Moves and ${document.querySelectorAll(".fa.fa-star").length} stars.</p>
+        <p>Finished in ${minutesLabel.textContent} : ${secondsLabel.textContent}</p>
+        <p>Wooooooooo!</p>
+        <button class="btn" type="submit"  onClick="window.location.reload();">Play again</button>
+    </div>`;
 }
 
 // Success animation HTML template. It functions with its CSS.
