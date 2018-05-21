@@ -12,7 +12,9 @@ let matchedIcons = 0;
  *   - loop through each card and create its HTML
  *   - add each card's HTML to the page
  */
+// Double the cards in the array, then shuffle them randomly
 const cardList = shuffle(cards.concat(cards));
+// Create each card's HTML and add them to DOM
 const fragmentList = document.createDocumentFragment();
 for (const card of cardList){
     const li = document.createElement("li");
@@ -50,10 +52,12 @@ function shuffle(array) {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
+// Add event listener to the cards' container
 deck.addEventListener("click", displayCard, false);
 
 function displayCard(event){
     const currNode = event.target;
+    // Check clicked element
     if(currNode.nodeName === "LI"){
         if(!currNode.className.includes("match")){
             checkCard(currNode);
@@ -69,7 +73,9 @@ function checkCard(node){
         openCards.push(node);
         // If there is not only 1 card opened, then compare the cards in the list.
         if(openCards.length > 1){
-            if(openCards[0].querySelector("i").className === openCards[1].querySelector("i").className){
+            const firstCard = openCards[0];
+            // Prevent the situation that the same card is cliked for two times.
+            if(firstCard !== node && (firstCard.querySelector("i").className === node.querySelector("i").className)){
                 matchCards();
             } else {
                 addWrongAnimation();
@@ -77,6 +83,7 @@ function checkCard(node){
                 setTimeout(hideCards, 1000);
             }
             incrementMoveCounter();
+            // Check if the game is finished
             if(matchedIcons === cards.length){success();}
         }
     }
@@ -85,11 +92,13 @@ function checkCard(node){
 function matchCards(){
     openCards.forEach((card) => {card.className = "card match"});
     openCards = [];
+    // Record game progress
     matchedIcons += 1;
 }
 
 function success(){
     document.body.style.background = "white";
+    // Show statistics of the user's performance
     document.body.innerHTML = `
     <div class="container center">
         ${successAnimation}
@@ -114,17 +123,16 @@ const moves = document.querySelector(".moves");
 const stars = document.querySelectorAll(".fa.fa-star");
 function incrementMoveCounter(){
     moveCounter += 1;
-    // const num = Number(moves.textContent) + 1;
     moves.textContent = moveCounter;
+    // The lowest score is 1 star
     if(12 < moveCounter && moveCounter <= 16){
         stars[stars.length - 1].className = "fa fa-star-o";
-    } else if (16 < moveCounter && moveCounter <= 20){
+    } else if (moveCounter > 16){
         stars[stars.length - 2].className = "fa fa-star-o";
-    } else if (moveCounter > 20){
-        stars[stars.length - 3].className = "fa fa-star-o";
     }
 }
 
+// Success animation HTML template. It functions with its CSS.
 const successAnimation = `
 <div class="check_mark">
     <div class="sa-icon sa-success animate">
