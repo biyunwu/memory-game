@@ -10,6 +10,7 @@ html {
 
 html,
 body {
+    min-width: 320px;
     width: 100%;
     height: 100%;
     margin: 0;
@@ -33,17 +34,15 @@ h1 {
     font-weight: 300;
 }
 
-.timer {
-    margin-left: 5vw;
-}
-
 /*
  * Styles for the deck of cards
  */
 
 .deck {
-    width: 660px;
-    min-height: 680px;
+    width: 95vw;
+    height: 95vw;
+    max-width: 660px;
+    max-height: 680px;
     background: linear-gradient(160deg, #02ccba 0%, #aa7ecd 100%);
     padding: 32px;
     border-radius: 10px;
@@ -53,11 +52,14 @@ h1 {
     justify-content: space-between;
     align-items: center;
     margin: 0 0 3em;
+    max
 }
 
 .deck .card {
-    height: 125px;
-    width: 125px;
+    height: 18vw;
+    width: 18vw;
+    max-height: 125px;
+    max-width: 125px;
     background: #2e3d49;
     font-size: 0;
     color: #ffffff;
@@ -91,7 +93,8 @@ h1 {
 
 .score-panel {
     text-align: left;
-    width: 345px;
+    width: 90vw;
+    max-width: 400px;;
     margin-bottom: 10px;
 }
 
@@ -107,13 +110,17 @@ h1 {
     display: inline-block;
 }
 
+.score-panel .timer {
+    margin-left: 15%;
+}
+
 .score-panel .restart {
     float: right;
     cursor: pointer;
 }
 
 .center {
-    margin: 15vh auto;
+    margin: 5vh auto;
 }
 
 .btn {
