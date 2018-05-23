@@ -83,14 +83,17 @@ function checkCard(node){
             // Prevent the situation that the same card is cliked for two times.
             if(firstCard !== node && (firstCard.querySelector("i").className === node.querySelector("i").className)){
                 matchCards();
+                incrementMoveCounter();
+                // Check if the game is finished
+                if(matchedIcons === cards.length){success();}
             } else {
                 addWrongAnimation();
                 // Leave 1 second to show the second card, then hide the ummatched cards.
                 setTimeout(hideCards, 1000);
+                if(firstCard !== node){
+                    incrementMoveCounter();
+                }
             }
-            incrementMoveCounter();
-            // Check if the game is finished
-            if(matchedIcons === cards.length){success();}
         }
     }
 }
