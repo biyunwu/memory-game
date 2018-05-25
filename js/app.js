@@ -74,7 +74,7 @@ function displayCard(event){
 function checkCard(node){
     if(openCards.length < 2){
         // Add CSS to show the card's icon.
-        node.className += " open show";
+        node.className += " open show flip";
         // Store in the opened list
         openCards.push(node);
         // If there is not only 1 card opened, then compare the cards in the list.
@@ -85,11 +85,17 @@ function checkCard(node){
                 matchCards();
                 incrementMoveCounter();
                 // Check if the game is finished
-                if(matchedIcons === cards.length){success();}
+                if(matchedIcons === cards.length){
+                    // Shaking animation indicates the game is finished.
+                    finish();
+                    // Leave 1 second to display all matched cards. Then, display the statistics page.
+                    setTimeout(statistics, 1000);
+                }
             } else {
-                addWrongAnimation();
+                // Shaking animation with red background indicates the wrong guess after 1 second.
+                setTimeout(addWrongAnimation, 500);
                 // Leave 1 second to show the second card, then hide the ummatched cards.
-                setTimeout(hideCards, 1000);
+                setTimeout(hideCards, 1500);
                 if(firstCard !== node){
                     incrementMoveCounter();
                 }
@@ -103,6 +109,10 @@ function matchCards(){
     openCards = [];
     // Record game progress
     matchedIcons += 1;
+}
+
+function finish(){
+    deck.className += " finish";
 }
 
 function addWrongAnimation(){
@@ -148,7 +158,7 @@ function pad(val) {
 }
 
 // Show statistics of the user's performance after the game is finished
-function success(){
+function statistics(){
     // Stop timer
     clearInterval(timer);
     document.body.style.background = "white";
