@@ -86,8 +86,6 @@ function checkCard(node){
                 incrementMoveCounter();
                 // Check if the game is finished
                 if(matchedIcons === cards.length){
-                    // Shaking animation indicates the game is finished.
-                    finish();
                     // Leave 1 second to display all matched cards. Then, display the statistics page.
                     setTimeout(statistics, 1000);
                 }
@@ -109,10 +107,6 @@ function matchCards(){
     openCards = [];
     // Record game progress
     matchedIcons += 1;
-}
-
-function finish(){
-    deck.className += " finish";
 }
 
 function addWrongAnimation(){

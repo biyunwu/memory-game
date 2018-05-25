@@ -8,7 +8,7 @@
 
 ## Instructions
 
-This is a memory game project which is implemented by native JavsScript, css animation and Font Awsome icons.
+This is a memory game project which is implemented by native JavsScript, css animation and Font Awsome icons. Try the game on [CodePen](https://codepen.io/BeenWu/pen/QreWLW)(Google Chrome recommended).
 
 ## Functionality
 
