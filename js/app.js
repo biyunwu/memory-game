@@ -1,34 +1,71 @@
-/*
- * Create a list that holds all of your cards
- */
+// GLOBAL VARIABLES
+// Create a list that holds all cards
 const cards = ["fa-diamond", "fa-paper-plane-o", "fa-anchor", "fa-bolt", "fa-cube", "fa-bomb", "fa-leaf", "fa-bicycle"];
+// Store original HTML for rendering the original state.
+const originalBodyHTML = document.body.innerHTML;
+// Declare variables to store DOM elements. These DOM elements get updated when the game restarts.
+let moves, stars, minutesLabel, secondsLabel, deck;
+// Store opened cards in the array for comparing. The length cannot be more than 2
 let openCards = [];
+// Reset data
 let moveCounter = 0;
 let matchedIcons = 0;
 let gameStart = false;
+// A timer function will be stroed for future clearing
 let timer = null;
+// Second counter
+let totalSeconds = 0;
+// Success animation HTML template. It functions with its CSS.
+const successAnimation = `
+<div class="check_mark">
+    <div class="sa-icon sa-success animate">
+        <span class="sa-line sa-tip animateSuccessTip"></span>
+        <span class="sa-line sa-long animateSuccessLong"></span>
+        <div class="sa-placeholder"></div>
+        <div class="sa-fix"></div>
+    </div>
+</div>
+`;
 
-/*
- * Display the cards on the page
- *   - shuffle the list of cards using the provided "shuffle" method below
- *   - loop through each card and create its HTML
- *   - add each card's HTML to the page
- */
-// Double the cards in the array, then shuffle them randomly
-const cardList = shuffle(cards.concat(cards));
-// Create each card's HTML and add them to DOM
-const fragmentList = document.createDocumentFragment();
-for (const card of cardList){
-    const li = document.createElement("li");
-    li.className = "card";
-    const i = document.createElement("i");
-    i.className = "fa " + card;
-    li.appendChild(i);
-    fragmentList.appendChild(li);
+start();
+// Restart the game when requested
+document.body.addEventListener("click", reset, false);
+
+function start(){
+    // Store DOM elements in declared variables
+    getElements();
+    /*
+    * Display the cards on the page
+    *   - shuffle the list of cards using the provided "shuffle" method below
+    *   - loop through each card and create its HTML
+    *   - add each card's HTML to the page
+    */
+    // Double the cards in the array, then shuffle them randomly
+    const cardList = shuffle(cards.concat(cards));
+    // Create each card's HTML and add them to DOM
+    const fragmentList = document.createDocumentFragment();
+    for (const card of cardList){
+        const li = document.createElement("li");
+        li.className = "card";
+        const i = document.createElement("i");
+        i.className = "fa " + card;
+        li.appendChild(i);
+        fragmentList.appendChild(li);
+    }
+    deck.appendChild(fragmentList);
+
+    // Add event listener to the cards' container
+    deck.addEventListener("click", displayCard, false);
 }
-const deck = document.querySelector(".deck");
-deck.appendChild(fragmentList);
 
+function getElements(){
+    moves = document.querySelector(".moves");
+    stars = document.querySelectorAll(".fa.fa-star");
+    minutesLabel = document.getElementById("minutes");
+    secondsLabel = document.getElementById("seconds");
+    deck = document.querySelector(".deck");
+}
+    
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
@@ -43,19 +80,6 @@ function shuffle(array) {
 
     return array;
 }
-
-/*
- * set up the event listener for a card. If a card is clicked:
- *  - display the card's symbol (put this functionality in another function that you call from this one)
- *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
- *  - if the list already has another card, check to see if the two cards match
- *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
- *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
- *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
- *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
- */
-// Add event listener to the cards' container
-deck.addEventListener("click", displayCard, false);
 
 function displayCard(event){
     const currNode = event.target;
@@ -121,8 +145,6 @@ function hideCards(){
 }
 
 // Update move counter.
-const moves = document.querySelector(".moves");
-const stars = document.querySelectorAll(".fa.fa-star");
 function incrementMoveCounter(){
     moveCounter += 1;
     moves.textContent = moveCounter;
@@ -135,15 +157,12 @@ function incrementMoveCounter(){
 }
 
 // Timer function modified based on https://stackoverflow.com/questions/5517597/plain-count-up-timer-in-javascript
-const minutesLabel = document.getElementById("minutes");
-const secondsLabel = document.getElementById("seconds");
-let totalSeconds = 0;
-
 function setTime() {
     ++totalSeconds;
     secondsLabel.innerHTML = pad(totalSeconds % 60);
     minutesLabel.innerHTML = pad(parseInt(totalSeconds / 60));
 }
+// Helper method for setTime()
 function pad(val) {
     const valString = val + "";
     if (valString.length < 2) {
@@ -163,18 +182,29 @@ function statistics(){
         <p>With ${moveCounter} Moves and ${document.querySelectorAll(".fa.fa-star").length} stars.</p>
         <p>Finished in ${minutesLabel.textContent} : ${secondsLabel.textContent}</p>
         <p>Wooooooooo!</p>
-        <button class="btn" type="submit"  onClick="window.location.reload();">Play again</button>
+        <button class="btn reset" type="submit">Play again</button>
     </div>`;
 }
 
-// Success animation HTML template. It functions with its CSS.
-const successAnimation = `
-<div class="check_mark">
-    <div class="sa-icon sa-success animate">
-        <span class="sa-line sa-tip animateSuccessTip"></span>
-        <span class="sa-line sa-long animateSuccessLong"></span>
-        <div class="sa-placeholder"></div>
-        <div class="sa-fix"></div>
-    </div>
-</div>
-`;
+// Restart game
+function reset(event){
+    let currClasses = event.target.className;
+    if (currClasses.includes("reset")){
+        // Reset data and clear timer, then call start()
+        document.body.innerHTML = originalBodyHTML;
+        openCards = [];
+        moveCounter = 0;
+        matchedIcons = 0;
+        gameStart = false;
+        clearInterval(timer);
+        totalSeconds = 0;
+        secondsLabel.innerHTML = "00";
+        minutesLabel.innerHTML = "00";
+        moves = document.querySelector(".moves");
+        stars = document.querySelectorAll(".fa.fa-star");
+        minutesLabel = document.getElementById("minutes");
+        secondsLabel = document.getElementById("seconds");
+        start();
+        return;
+    }
+}
