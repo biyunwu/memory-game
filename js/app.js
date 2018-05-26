@@ -82,13 +82,8 @@ function checkCard(node){
             const firstCard = openCards[0];
             // Prevent the situation that the same card is cliked for two times.
             if(firstCard !== node && (firstCard.querySelector("i").className === node.querySelector("i").className)){
-                matchCards();
+                setTimeout(matchCards, 500);
                 incrementMoveCounter();
-                // Check if the game is finished
-                if(matchedIcons === cards.length){
-                    // Leave 1 second to display all matched cards. Then, display the statistics page.
-                    setTimeout(statistics, 1000);
-                }
             } else {
                 // Shaking animation with red background indicates the wrong guess after 1 second.
                 setTimeout(addWrongAnimation, 500);
@@ -107,6 +102,13 @@ function matchCards(){
     openCards = [];
     // Record game progress
     matchedIcons += 1;
+    // Check if the game is finished
+    if(matchedIcons === cards.length){
+        // Stop timer
+        clearInterval(timer);
+        // Leave 1 second to display all matched cards. Then, display the statistics page.
+        setTimeout(statistics, 1000);
+    }
 }
 
 function addWrongAnimation(){
@@ -114,7 +116,7 @@ function addWrongAnimation(){
 }
 
 function hideCards(){
-    openCards.forEach((card) => {card.className = "card";});
+    openCards.forEach((card) => {card.className = "card"});
     openCards = [];
 }
 
@@ -153,8 +155,6 @@ function pad(val) {
 
 // Show statistics of the user's performance after the game is finished
 function statistics(){
-    // Stop timer
-    clearInterval(timer);
     document.body.style.background = "white";
     document.body.innerHTML = `
     <div class="container center">
