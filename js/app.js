@@ -5,28 +5,22 @@ const cards = ["fa-diamond", "fa-paper-plane-o", "fa-anchor", "fa-bolt", "fa-cub
 const originalBodyHTML = document.body.innerHTML;
 // Declare variables to store DOM elements. These DOM elements get updated when the game restarts.
 let moves, stars, minutesLabel, secondsLabel, deck;
-// Store opened cards in the array for comparing. The length cannot be more than 2
-let openCards = [];
-// Reset data
-let moveCounter = 0;
-let matchedIcons = 0;
-let gameStart = false;
-// A timer function will be stroed for future clearing
-let timer = null;
-// Second counter
-let totalSeconds = 0;
+// Declare variables to store data of array(Store opened cards in the array for comparing. The length cannot be more than 2), num, num, boolean, object, num
+// A timer function will be stroed in "timer" for future clearing
+let openCards, moveCounter, matchedIcons, gameStart, timer, totalSeconds;
 // Success animation HTML template. It functions with its CSS.
 const successAnimation = `
-<div class="check_mark">
-    <div class="sa-icon sa-success animate">
-        <span class="sa-line sa-tip animateSuccessTip"></span>
-        <span class="sa-line sa-long animateSuccessLong"></span>
-        <div class="sa-placeholder"></div>
-        <div class="sa-fix"></div>
+    <div class="check_mark">
+        <div class="sa-icon sa-success animate">
+            <span class="sa-line sa-tip animateSuccessTip"></span>
+            <span class="sa-line sa-long animateSuccessLong"></span>
+            <div class="sa-placeholder"></div>
+            <div class="sa-fix"></div>
+        </div>
     </div>
-</div>
-`;
+    `;
 
+// Initiate the game
 start();
 // Restart the game when requested
 document.body.addEventListener("click", reset, false);
@@ -34,12 +28,8 @@ document.body.addEventListener("click", reset, false);
 function start(){
     // Store DOM elements in declared variables
     getElements();
-    /*
-    * Display the cards on the page
-    *   - shuffle the list of cards using the provided "shuffle" method below
-    *   - loop through each card and create its HTML
-    *   - add each card's HTML to the page
-    */
+    // Initiate data
+    initiateData();
     // Double the cards in the array, then shuffle them randomly
     const cardList = shuffle(cards.concat(cards));
     // Create each card's HTML and add them to DOM
@@ -53,7 +43,6 @@ function start(){
         fragmentList.appendChild(li);
     }
     deck.appendChild(fragmentList);
-
     // Add event listener to the cards' container
     deck.addEventListener("click", displayCard, false);
 }
@@ -65,11 +54,21 @@ function getElements(){
     secondsLabel = document.getElementById("seconds");
     deck = document.querySelector(".deck");
 }
+
+function initiateData(){
+    openCards = [];
+    moveCounter = 0;
+    matchedIcons = 0;
+    gameStart = false;
+    // A timer function will be stroed for future clearing
+    timer = null;
+    // Second counter
+    totalSeconds = 0;
+}
     
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
-
     while (currentIndex !== 0) {
         randomIndex = Math.floor(Math.random() * currentIndex);
         currentIndex -= 1;
@@ -77,7 +76,6 @@ function shuffle(array) {
         array[currentIndex] = array[randomIndex];
         array[randomIndex] = temporaryValue;
     }
-
     return array;
 }
 
@@ -162,6 +160,7 @@ function setTime() {
     secondsLabel.innerHTML = pad(totalSeconds % 60);
     minutesLabel.innerHTML = pad(parseInt(totalSeconds / 60));
 }
+
 // Helper method for setTime()
 function pad(val) {
     const valString = val + "";
@@ -192,19 +191,8 @@ function reset(event){
     if (currClasses.includes("reset")){
         // Reset data and clear timer, then call start()
         document.body.innerHTML = originalBodyHTML;
-        openCards = [];
-        moveCounter = 0;
-        matchedIcons = 0;
-        gameStart = false;
         clearInterval(timer);
-        totalSeconds = 0;
-        secondsLabel.innerHTML = "00";
-        minutesLabel.innerHTML = "00";
-        moves = document.querySelector(".moves");
-        stars = document.querySelectorAll(".fa.fa-star");
-        minutesLabel = document.getElementById("minutes");
-        secondsLabel = document.getElementById("seconds");
+        initiateData();
         start();
-        return;
     }
 }
